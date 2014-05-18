@@ -14,6 +14,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'colorize'
   gem 'database_cleaner'
+  gem 'spring-commands-rspec'
 end
 
 

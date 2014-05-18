@@ -3,6 +3,6 @@ class ApplicationController < ActionController::API
 
   private
   def record_not_found
-    render json: {message: 'Resource not found'}, status: 400
+    render json: {error: 'resource not found.'}, status: 404
   end
 end
