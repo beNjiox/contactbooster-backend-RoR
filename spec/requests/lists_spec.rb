@@ -90,6 +90,12 @@ describe 'GET /lists' do
     })
   end
 
+  it "should fail to update List with bad param" do
+    patch '/lists/2.json', { list: { name: 'family edit.', position: 'end' } }
+
+    expect(response.status).to be == 400
+  end
+
   it "should fail to update non existing List" do
     patch '/lists/42.json', { list: { name: 'family edit.', position: 42 } }
 

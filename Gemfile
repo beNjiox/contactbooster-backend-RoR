@@ -17,6 +17,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
 end
 
+gem 'simplecov', :require => false, :group => :test
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
