@@ -1,4 +1,4 @@
-class ListsController < ActionController::API
+class ListsController < ApplicationController
   def index
     @lists = List.all
     render
