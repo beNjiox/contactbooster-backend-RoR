@@ -7,12 +7,13 @@ gem 'rspec-rails'
 gem 'jbuilder'
 gem 'dotenv'
 
+gem 'faker'
+gem 'factory_girl_rails'
+gem 'colorize'
+
 group :development, :test do
   gem 'sqlite3'
-  gem 'faker'
   gem 'awesome_print'
-  gem 'factory_girl_rails'
-  gem 'colorize'
   gem 'database_cleaner'
   gem 'spring-commands-rspec'
   gem 'apiaryio'
