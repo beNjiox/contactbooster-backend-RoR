@@ -38,8 +38,21 @@ A single List object with all its contacts
 
             { "id": 2, "title": "family", "position": 1 }
 
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
+        }
+
 ### Remove a List [DELETE]
 + Response 204
+
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
+        }
+
 
 ### Update a List [PATCH]
 
@@ -53,6 +66,12 @@ A single List object with all its contacts
 
           { "id": 2, "title": "Work", "position": 1 }
 
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
+        }
+
 # Group Contact
 
 ## Contacts Collection [/lists/{list_id}/contacts]
@@ -64,13 +83,13 @@ A single List object with all its contacts
 
         [{
           "id": 1,
-          "list_id": 1
+          "list_id": 1,
           "lastname": "Jordan",
           "firstname": "Michael",
           "phone": "5555544444"
         }, {
           "id": 1,
-          "list_id": 1
+          "list_id": 1,
           "lastname": "Pippen",
           "firstname": "Scottie",
           "phone": "66666666"
@@ -80,13 +99,24 @@ A single List object with all its contacts
 
 + Request (application/json; charset=utf-8)
 
-        { "lastname": "Hawk", "firstname": "Tony", "phone": "55544433322", "list_id": 1 }
+        {
+          "lastname": "Hawk",
+          "list_id": 1,
+          "firstname": "Tony",
+          "phone": "55544433322"
+        }
 
 + Response 201 (application/json; charset=utf-8)
 
     + Body
 
-        { "id": 1, "lastname": "Hawk", "firstname": "Tony", "phone": "55544433322", "list_id": 1 }
+        {
+          "id": 1,
+          "list_id": 1,
+          "lastname": "Hawk",
+          "firstname": "Tony",
+          "phone": "55544433322"
+        }
 
 ## Contact [/lists/{list_id}/contacts/{contact_id}]
 
@@ -103,15 +133,27 @@ A single List object with all its contacts
 
         {
           "id": 1,
+          "list_id": 1,
           "lastname": "Hawk",
           "firstname": "Tony",
-          "phone": "55544433322",
-          "list_id": 1
+          "phone": "55544433322"
+        }
+
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
         }
 
 ### Delete a contact [DELETE]
 
 + Response 204 (application/json; charset=utf-8)
+
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
+        }
 
 ### Update a contact [PATCH]
 
@@ -127,10 +169,10 @@ A single List object with all its contacts
 
         {
           "id": 1,
+          "list_id": 1,
           "lastname": "Guez",
           "firstname": "Tony",
-          "phone": "55544433322",
-          "list_id": 1
+          "phone": "55544433322"
         }
 
 + Response 400 (application/json; charset=utf-8)
@@ -141,4 +183,10 @@ A single List object with all its contacts
           "phone": "Invalid phone format.",
           "lastname": "Lastname should have a length between 2 and 20 characters.",
           "firstname": "Firstname should have a length between 2 and 20 characters."
+        }
+
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
         }
