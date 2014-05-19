@@ -15,6 +15,7 @@ group :development, :test do
   gem 'colorize'
   gem 'database_cleaner'
   gem 'spring-commands-rspec'
+  gem 'apiaryio'
 end
 
 gem 'simplecov', :require => false, :group => :test

@@ -40,3 +40,105 @@ A single List object with all its contacts
 
 ### Remove a List [DELETE]
 + Response 204
+
+### Update a List [PATCH]
+
++ Request (application/json)
+
+          { "title": "Work" }
+
++ Response 200
+
+    + Body
+
+          { "id": 2, "title": "Work", "position": 1 }
+
+# Group Contact
+
+## Contacts Collection [/lists/{list_id}/contacts]
+### List all Contacts [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+        [{
+          "id": 1,
+          "list_id": 1
+          "lastname": "Jordan",
+          "firstname": "Michael",
+          "phone": "5555544444"
+        }, {
+          "id": 1,
+          "list_id": 1
+          "lastname": "Pippen",
+          "firstname": "Scottie",
+          "phone": "66666666"
+        }]
+
+### Create a contact [POST]
+
++ Request (application/json)
+
+        { "lastname": "Hawk", "firstname": "Tony", "phone": "55544433322", "list_id": 1 }
+
++ Response 201 (application/json)
+
+    + Body
+
+        { "id": 1, "lastname": "Hawk", "firstname": "Tony", "phone": "55544433322", "list_id": 1 }
+
+## Contact [/lists/{list_id}/contacts/{contact_id}]
+
++ Parameters
+    + list_id (required, number, `1`) ... Numeric `id` of the List to perform action with.
+    + contact_id (required, number, `1`) ... Numeric `id` of the contact to perform action with. Has example value.
+
+
+### Retrieve a contact [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+          "id": 1,
+          "lastname": "Hawk",
+          "firstname": "Tony",
+          "phone": "55544433322",
+          "list_id": 1
+        }
+
+### Delete a contact [DELETE]
+
++ Response 204 (application/json)
+
+### Update a contact [PATCH]
+
++ Request (application/json)
+
+        {
+          "lastname": "Guez"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+          "id": 1,
+          "lastname": "Guez",
+          "firstname": "Tony",
+          "phone": "55544433322",
+          "list_id": 1
+        }
+
++ Response 400 (application/json)
+
+    + Body
+
+        {
+          "phone": "Invalid phone format.",
+          "lastname": "Lastname should have a length between 2 and 20 characters.",
+          "firstname": "Firstname should have a length between 2 and 20 characters."
+        }
