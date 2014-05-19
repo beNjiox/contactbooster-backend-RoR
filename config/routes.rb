@@ -1,5 +1,7 @@
 Ror::Application.routes.draw do
-  resources :lists do
-    resources :contacts
+  scope defaults: { format: :json } do
+    resources :lists do
+      resources :contacts
+    end
   end
 end
