@@ -11,11 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140518002705) do
+ActiveRecord::Schema.define(version: 20140519090344) do
+
+  create_table "contacts", force: true do |t|
+    t.integer  "list_id"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contacts", ["list_id"], name: "index_contacts_on_list_id"
 
   create_table "lists", force: true do |t|
-    t.string  "name",               null: false
-    t.integer "position", limit: 2, null: false
+    t.string  "name",                                 null: false
+    t.integer "position",       limit: 2,             null: false
+    t.integer "contacts_count",           default: 0, null: false
   end
 
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'GET /lists' do
+describe '/lists endpoints' do
 
   before(:each) do
     create(:list, name: 'friends', position: 0)
@@ -19,11 +19,13 @@ describe 'GET /lists' do
     expect(last_list.position).to eq 42
   end
 
-  it "should not create a list (bad position)" do
+  it "should not create a list (invalid position)" do
     post '/lists.json', { list: { name: 'Work.', position: 'end' } }
 
     expect(List.all.length).to be == 2
     expect(response.status).to be == 400
+    expect(response_json.keys).to include('error')
+    expect(response_json['error'].keys).to include('position')
   end
 
   it "should return the Lists" do
@@ -94,6 +96,8 @@ describe 'GET /lists' do
     patch '/lists/2.json', { list: { name: 'family edit.', position: 'end' } }
 
     expect(response.status).to be == 400
+    expect(response_json.keys).to include('error')
+    expect(response_json['error'].keys).to include('position')
   end
 
   it "should fail to update non existing List" do

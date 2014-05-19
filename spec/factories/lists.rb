@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :list do
-    name "Jake"
+    name { Faker::Lorem.word }
     position 0
   end
 end

@@ -21,7 +21,7 @@ class ListsController < ApplicationController
     if list.save
       render list, status: :created
     else
-      render json: { error: list.errors.full_messages }, status: :bad_request
+      render json: { error: list.errors.messages }, status: :bad_request
     end
   end
 
@@ -30,7 +30,7 @@ class ListsController < ApplicationController
     if @list.update(list_param)
       render @list
     else
-      render json: {message:"Can't update this list."}, status: :bad_request
+      render json: { error: @list.errors }, status: :bad_request
     end
   end
 
