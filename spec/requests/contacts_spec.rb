@@ -20,6 +20,7 @@ describe '/lists endpoints' do
     expect(response.status).to be == 200
     expected_json = @list.contacts.map { |c| {
         "id"        => c.id,
+        "list_id"   => @list.id,
         "lastname"  => c.lastname,
         "firstname" => c.firstname,
         "phone"     => c.phone
@@ -34,6 +35,7 @@ describe '/lists endpoints' do
     expect(response.status).to be == 200
     expect(response_json).to eq({
       "id"        => @contact1.id,
+      "list_id"   => @list.id,
       "lastname"  => @contact1.lastname,
       "firstname" => @contact1.firstname,
       "phone"     => @contact1.phone,
@@ -61,6 +63,7 @@ describe '/lists endpoints' do
     expect(response.status).to be == 200
     expect(response_json).to eq({
       "id"        => @contact3.id,
+      "list_id"   => @list2.id,
       "lastname"  => "lastname Edit",
       "firstname" => "firstname Edit",
       "phone"     => "312313223132"
@@ -81,6 +84,7 @@ describe '/lists endpoints' do
     expect(response.status).to be == 201
     expect(response_json).to eq({
       "id"        => @list2.contacts.last.id,
+      "list_id"   => @list2.id,
       "lastname"  => "Guez",
       "firstname" => "Benjamin",
       "phone"     => "5555566666"
