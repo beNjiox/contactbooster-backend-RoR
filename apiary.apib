@@ -7,19 +7,35 @@ API using rails-api for contactbooster app.
 # Group List
 
 ## Lists Collection [/lists]
-### List all Lists [GET]
-+ Response 200 (application/json; charset=utf-8)
+
++ Model (application/json; charset=utf-8)
 
         [{
-          "id": 1, "name": "friends", "position": 0
-        }, {
-          "id": 2, "name": "family", "position": 1
+          "id": 1,
+          "name": "friends",
+          "position": 0
+        },
+        {
+          "id": 2,
+          "name": "family",
+          "position": 1
         }]
+
+
+### List all Lists [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+        [Lists Collection][]
+
 
 ### Create a List [POST]
 + Request (application/json; charset=utf-8)
 
-        { "name": "Work", "position": 2 }
+        { 
+            "name": "Work",
+            "position": 2
+        }
 
 + Response 201 (application/json; charset=utf-8)
 
@@ -34,9 +50,11 @@ A single List object with all its contacts
 ### Retrieve a List [GET]
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
-            { "id": 2, "title": "family", "position": 1 }
+        { 
+            "id": 2,
+            "title": "family",
+            "position": 1
+        }
 
 + Response 404 (application/json; charset=utf-8)
 
@@ -58,13 +76,17 @@ A single List object with all its contacts
 
 + Request (application/json; charset=utf-8)
 
-          { "title": "Work" }
+        {
+            "title": "Work"
+        }
 
 + Response 200
 
-    + Body
-
-          { "id": 2, "title": "Work", "position": 1 }
+        { 
+            "id": 2,
+            "title": "Work",
+            "position": 1
+        }
 
 + Response 404 (application/json; charset=utf-8)
 
@@ -79,15 +101,14 @@ A single List object with all its contacts
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
         [{
           "id": 1,
           "list_id": 1,
           "lastname": "Jordan",
           "firstname": "Michael",
           "phone": "5555544444"
-        }, {
+        },
+        {
           "id": 1,
           "list_id": 1,
           "lastname": "Pippen",
@@ -108,14 +129,12 @@ A single List object with all its contacts
 
 + Response 201 (application/json; charset=utf-8)
 
-    + Body
-
         {
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Hawk",
-          "firstname": "Tony",
-          "phone": "55544433322"
+            "id": 1,
+            "list_id": 1,
+            "lastname": "Hawk",
+            "firstname": "Tony",
+            "phone": "55544433322"
         }
 
 ## Contact [/lists/{list_id}/contacts/{contact_id}]
@@ -128,8 +147,6 @@ A single List object with all its contacts
 ### Retrieve a contact [GET]
 
 + Response 200 (application/json; charset=utf-8)
-
-    + Body
 
         {
           "id": 1,
@@ -147,7 +164,7 @@ A single List object with all its contacts
 
 ### Delete a contact [DELETE]
 
-+ Response 204 (application/json; charset=utf-8)
++ Response 204 
 
 + Response 404 (application/json; charset=utf-8)
 
@@ -165,8 +182,6 @@ A single List object with all its contacts
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
         {
           "id": 1,
           "list_id": 1,
@@ -176,8 +191,6 @@ A single List object with all its contacts
         }
 
 + Response 400 (application/json; charset=utf-8)
-
-    + Body
 
         {
           "phone": "Invalid phone format.",
