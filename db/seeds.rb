@@ -2,7 +2,7 @@ ActiveRecord::Base.establish_connection
 ActiveRecord::Base.connection.tables.each do |table|
   next if table == 'schema_migrations'
 
-  if if Rails.env.production?
+  if Rails.env.production?
     # MySQL and PostgreSQL
     ActiveRecord::Base.connection.execute("TRUNCATE #{table}")
   else
