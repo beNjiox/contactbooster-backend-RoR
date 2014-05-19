@@ -117,7 +117,7 @@ A single List object with all its contacts
 # Group Contact
 
 ## Contacts Collection [/lists/{list_id}/contacts]
-+ Model
++ Model (application/json; charset=utf-8)
 
         [{
           "id": 1,
@@ -135,13 +135,13 @@ A single List object with all its contacts
         }]
 
 ### List all Contacts [GET]
-+ Response 200 (application/json; charset=utf-8)
++ Response 200
 
     [Contacts Collection][]
 
 ## Contact [/lists/{list_id}/contacts/{contact_id}]
 
-+ Model
++ Model (application/json; charset=utf-8)
 
         {
             "id": 1,
@@ -165,13 +165,13 @@ A single List object with all its contacts
             "phone": "55544433322"
         }
 
-+ Response 201 (application/json; charset=utf-8)
++ Response 201
 
     [Contact][]
 
 ### Retrieve a contact [GET]
 
-+ Response 200 (application/json; charset=utf-8)
++ Response 200
 
     [Contact][]
 
@@ -185,7 +185,7 @@ A single List object with all its contacts
 + Response 204
 
 + Response 404 (application/json; charset=utf-8)
-        
+
         {
             "error": "resource not found."
         }
