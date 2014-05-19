@@ -20,7 +20,7 @@ API using rails-api for contactbooster app.
 # Group List
 ## Lists Collection [/lists]
 
-+ Model (application/json)
++ Model (application/json; charset=utf-8)
 
         {
           "total": 2,
@@ -40,14 +40,14 @@ API using rails-api for contactbooster app.
         }
 
 ### List all Lists [GET]
-+ Response 200
++ Response 200 (application/json; charset=utf-8)
 
     [Lists Collection][]
 
 ## List [/lists/{id}]
 A single List object with all its contacts
 
-+ Model
++ Model (application/json; charset=utf-8)
 
         {
           "id": 1,
@@ -59,14 +59,14 @@ A single List object with all its contacts
     + id (required, number, `1`) ... Numeric `id` of the List to perform action with
 
 ### Create a List [POST]
-+ Request (application/json; charset=utf-8)
++ Request
 
         {
             "name": "Friends",
             "position": 0
         }
 
-+ Response 201
++ Response 201 (application/json; charset=utf-8)
 
     [List][]
 
@@ -100,7 +100,7 @@ A single List object with all its contacts
             "position": 1
         }
 
-+ Response 200
++ Response 200 (application/json; charset=utf-8)
 
         {
             "id": 2,
@@ -156,7 +156,7 @@ A single List object with all its contacts
     + contact_id (required, number, `1`) ... Numeric `id` of the contact to perform action with. Has example value.
 
 ### Create a contact [POST]
-+ Request (application/json; charset=utf-8)
++ Request
 
         {
             "lastname": "Hawk",
@@ -165,13 +165,13 @@ A single List object with all its contacts
             "phone": "55544433322"
         }
 
-+ Response 201
++ Response 201 (application/json; charset=utf-8)
 
     [Contact][]
 
 ### Retrieve a contact [GET]
 
-+ Response 200
++ Response 200 (application/json; charset=utf-8)
 
     [Contact][]
 
@@ -191,7 +191,7 @@ A single List object with all its contacts
         }
 
 ### Update a contact [PATCH]
-+ Request (application/json; charset=utf-8)
++ Request
 
         {
             "lastname": "Guez"
