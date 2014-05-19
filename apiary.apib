@@ -4,15 +4,28 @@ HOST: http://contactbooster-rails.herokuapp.com/
 # contactbooster/rails
 API using rails-api for contactbooster app.
 
-# Group List
+# status code
+```200``` successfull request with body returned
 
+```201``` successfull creation request with body returned
+
+```204``` successfull request with nothing returned
+
+```400``` bad request (input, validations, parameters...)
+
+```404``` resource(s) not found
+
+# endpoints documentation
+
+# Group List
 ## Lists Collection [/lists]
 
 + Model (application/json)
-
-    + Body
-
-            [{
+        {
+          "total": 2,
+          "contacts":
+          [
+            {
               "id": 1,
               "name": "friends",
               "position": 0
@@ -21,74 +34,77 @@ API using rails-api for contactbooster app.
               "id": 2,
               "name": "family",
               "position": 1
-            }]
-
-
-### List all Lists [GET]
-
-+ Response 200
-
-        [Lists Collection][]
-
-
-### Create a List [POST]
-+ Request (application/json; charset=utf-8)
-
-        { 
-            "name": "Work",
-            "position": 2
+            }
+          ]
         }
 
-+ Response 201 (application/json; charset=utf-8)
+### List all Lists [GET]
++ Response 200
 
-        { "id": 3, "title": "Work", "position": 2 }
+    [Lists Collection][]
 
 ## List [/lists/{id}]
 A single List object with all its contacts
 
++ Model
+        {
+          "id": 1,
+          "name": "Friends",
+          "position": 0
+        }
+
 + Parameters
-    + id (required, number, `1`) ... Numeric `id` of the List to perform action with. Has example value.
+    + id (required, number, `1`) ... Numeric `id` of the List to perform action with
+
+### Create a List [POST]
++ Request (application/json; charset=utf-8)
+
+    {
+        "name": "Friends",
+        "position": 0
+    }
+
++ Response 201
+
+    [List][]
 
 ### Retrieve a List [GET]
 + Response 200 (application/json; charset=utf-8)
 
-        { 
-            "id": 2,
-            "title": "family",
-            "position": 1
-        }
+    [List][]
 
 + Response 404 (application/json; charset=utf-8)
 
-        {
-          "error": "resource not found."
-        }
+    {
+      "error": "resource not found."
+    }
 
 ### Remove a List [DELETE]
 + Response 204
 
 + Response 404 (application/json; charset=utf-8)
 
-        {
-          "error": "resource not found."
-        }
+    {
+      "error": "resource not found."
+    }
 
 
 ### Update a List [PATCH]
 
 + Request (application/json; charset=utf-8)
 
-        {
-            "title": "Work"
-        }
+    {
+        "title": "Work"
+        "position": 1
+    }
 
 + Response 200
 
-        { 
-            "id": 2,
-            "title": "Work",
-            "position": 1
-        }
+    {
+        "id": 2,
+        "title": "Work",
+        "position": 1
+    }
 
 + Response 404 (application/json; charset=utf-8)
 
@@ -99,37 +115,31 @@ A single List object with all its contacts
 # Group Contact
 
 ## Contacts Collection [/lists/{list_id}/contacts]
-### List all Contacts [GET]
++ Model
 
+    [{
+      "id": 1,
+      "list_id": 1,
+      "lastname": "Jordan",
+      "firstname": "Michael",
+      "phone": "5555544444"
+    },
+    {
+      "id": 1,
+      "list_id": 1,
+      "lastname": "Pippen",
+      "firstname": "Scottie",
+      "phone": "66666666"
+    }]
+
+### List all Contacts [GET]
 + Response 200 (application/json; charset=utf-8)
 
-        [{
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Jordan",
-          "firstname": "Michael",
-          "phone": "5555544444"
-        },
-        {
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Pippen",
-          "firstname": "Scottie",
-          "phone": "66666666"
-        }]
+    [Contacts Collection][]
 
-### Create a contact [POST]
+## Contact [/lists/{list_id}/contacts/{contact_id}]
 
-+ Request (application/json; charset=utf-8)
-
-        {
-          "lastname": "Hawk",
-          "list_id": 1,
-          "firstname": "Tony",
-          "phone": "55544433322"
-        }
-
-+ Response 201 (application/json; charset=utf-8)
++ Model
 
         {
             "id": 1,
@@ -139,69 +149,69 @@ A single List object with all its contacts
             "phone": "55544433322"
         }
 
-## Contact [/lists/{list_id}/contacts/{contact_id}]
-
 + Parameters
     + list_id (required, number, `1`) ... Numeric `id` of the List to perform action with.
     + contact_id (required, number, `1`) ... Numeric `id` of the contact to perform action with. Has example value.
 
+### Create a contact [POST]
++ Request (application/json; charset=utf-8)
+
+        {
+            "lastname": "Hawk",
+            "list_id": 1,
+            "firstname": "Tony",
+            "phone": "55544433322"
+        }
+
++ Response 201 (application/json; charset=utf-8)
+
+    [Contact][]
 
 ### Retrieve a contact [GET]
 
 + Response 200 (application/json; charset=utf-8)
 
-        {
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Hawk",
-          "firstname": "Tony",
-          "phone": "55544433322"
-        }
+    [Contact][]
 
 + Response 404 (application/json; charset=utf-8)
 
-        {
-          "error": "resource not found."
-        }
+    {
+      "error": "resource not found."
+    }
 
 ### Delete a contact [DELETE]
-
-+ Response 204 
++ Response 204
 
 + Response 404 (application/json; charset=utf-8)
-
-        {
-          "error": "resource not found."
-        }
+      {
+        "error": "resource not found."
+      }
 
 ### Update a contact [PATCH]
-
 + Request (application/json; charset=utf-8)
-
-        {
-          "lastname": "Guez"
-        }
+      {
+        "lastname": "Guez"
+      }
 
 + Response 200 (application/json; charset=utf-8)
-
-        {
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Guez",
-          "firstname": "Tony",
-          "phone": "55544433322"
-        }
+      {
+        "id": 1,
+        "list_id": 1,
+        "lastname": "Guez",
+        "firstname": "Tony",
+        "phone": "55544433322"
+      }
 
 + Response 400 (application/json; charset=utf-8)
 
-        {
-          "phone": "Invalid phone format.",
-          "lastname": "Lastname should have a length between 2 and 20 characters.",
-          "firstname": "Firstname should have a length between 2 and 20 characters."
-        }
+      {
+        "phone": "Invalid phone format.",
+        "lastname": "Lastname should have a length between 2 and 20 characters.",
+        "firstname": "Firstname should have a length between 2 and 20 characters."
+      }
 
 + Response 404 (application/json; charset=utf-8)
 
-        {
-          "error": "resource not found."
-        }
+      {
+        "error": "resource not found."
+      }
