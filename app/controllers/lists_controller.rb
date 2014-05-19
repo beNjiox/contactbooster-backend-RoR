@@ -5,7 +5,7 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = List.find(params[:id])
+    @list = List.includes(:contacts).find(params[:id])
     render
   end
 

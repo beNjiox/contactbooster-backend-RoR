@@ -18,13 +18,72 @@ API using rails-api for contactbooster app.
 # endpoints documentation
 
 # Group List
-## Lists Collection [/lists]
+## List [/lists/{id}]
+A single List object with all its contacts
 
 + Model (application/json; charset=utf-8)
 
         {
+          "id": 1,
+          "name": "Friends",
+          "position": 0
+        }
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the List to perform action with
+
+### Retrieve a List [GET]
++ Response 200 (application/json; charset=utf-8)
+
+          {
+            "id": 1,
+            "name": "Friends",
+            "position": 0,
+            "contacts": [
+              { "id": 1, "firstname": "Michael", "lastname": "Jordan", "phone": "555533331" },
+              { "id": 2, "firstname": "Scottie", "lastname": "Pippen", "phone": "222244444" }
+            ]
+          }
+
+### Remove a List [DELETE]
++ Response 204
+
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
+        }
+
+
+### Update a List [PATCH]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "list": { "name": "Work", "position": 1 }
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+        {
+            "id": 2,
+            "name": "Work",
+            "position": 1
+        }
+
++ Response 404 (application/json; charset=utf-8)
+
+        {
+          "error": "resource not found."
+        }
+
+
+## Lists Collection [/lists]
++ Model (application/json; charset=utf-8)
+
+        {
           "total": 2,
-          "contacts":
+          "lists":
           [
             {
               "id": 1,
@@ -44,100 +103,21 @@ API using rails-api for contactbooster app.
 
     [Lists Collection][]
 
-## List [/lists/{id}]
-A single List object with all its contacts
-
-+ Model (application/json; charset=utf-8)
-
-        {
-          "id": 1,
-          "name": "Friends",
-          "position": 0
-        }
-
-+ Parameters
-    + id (required, number, `1`) ... Numeric `id` of the List to perform action with
-
 ### Create a List [POST]
-+ Request
++ Request (application/json; charset=utf-8)
 
         {
-            "name": "Friends",
-            "position": 0
+            "list": {
+              "name": "Friends",
+              "position": 0
+            }
         }
 
 + Response 201 (application/json; charset=utf-8)
 
     [List][]
 
-### Retrieve a List [GET]
-+ Response 200 (application/json; charset=utf-8)
-
-    [List][]
-
-+ Response 404 (application/json; charset=utf-8)
-
-        {
-          "error": "resource not found."
-        }
-
-### Remove a List [DELETE]
-+ Response 204
-
-+ Response 404 (application/json; charset=utf-8)
-
-        {
-          "error": "resource not found."
-        }
-
-
-### Update a List [PATCH]
-
-+ Request (application/json; charset=utf-8)
-
-        {
-            "title": "Work"
-            "position": 1
-        }
-
-+ Response 200 (application/json; charset=utf-8)
-
-        {
-            "id": 2,
-            "title": "Work",
-            "position": 1
-        }
-
-+ Response 404 (application/json; charset=utf-8)
-
-        {
-          "error": "resource not found."
-        }
-
 # Group Contact
-
-## Contacts Collection [/lists/{list_id}/contacts]
-+ Model (application/json; charset=utf-8)
-
-        [{
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Jordan",
-          "firstname": "Michael",
-          "phone": "5555544444"
-        },
-        {
-          "id": 1,
-          "list_id": 1,
-          "lastname": "Pippen",
-          "firstname": "Scottie",
-          "phone": "66666666"
-        }]
-
-### List all Contacts [GET]
-+ Response 200 (application/json; charset=utf-8)
-
-    [Contacts Collection][]
 
 ## Contact [/lists/{list_id}/contacts/{contact_id}]
 
@@ -154,20 +134,6 @@ A single List object with all its contacts
 + Parameters
     + list_id (required, number, `1`) ... Numeric `id` of the List to perform action with.
     + contact_id (required, number, `1`) ... Numeric `id` of the contact to perform action with. Has example value.
-
-### Create a contact [POST]
-+ Request
-
-        {
-            "lastname": "Hawk",
-            "list_id": 1,
-            "firstname": "Tony",
-            "phone": "55544433322"
-        }
-
-+ Response 201 (application/json; charset=utf-8)
-
-    [Contact][]
 
 ### Retrieve a contact [GET]
 
@@ -191,10 +157,10 @@ A single List object with all its contacts
         }
 
 ### Update a contact [PATCH]
-+ Request
++ Request (application/json; charset=utf-8)
 
         {
-            "lastname": "Guez"
+            "contact": { "lastname": "Guez" }
         }
 
 + Response 200 (application/json; charset=utf-8)
@@ -220,3 +186,48 @@ A single List object with all its contacts
         {
             "error": "resource not found."
         }
+
+
+## Contacts Collection [/lists/{list_id}/contacts]
+
++ Parameters
+    + list_id (required, number, `1`) ... Numeric `id` of the List to perform action with.
+
++ Model (application/json; charset=utf-8)
+
+        [{
+          "id": 1,
+          "list_id": 1,
+          "lastname": "Jordan",
+          "firstname": "Michael",
+          "phone": "5555544444"
+        },
+        {
+          "id": 1,
+          "list_id": 1,
+          "lastname": "Pippen",
+          "firstname": "Scottie",
+          "phone": "66666666"
+        }]
+
+### List all Contacts [GET]
++ Response 200 (application/json; charset=utf-8)
+
+    [Contacts Collection][]
+
+### Create a contact [POST]
++ Request (application/json; charset=utf-8)
+
+        {
+            "contact" : {
+              "lastname": "Hawk",
+              "list_id": 1,
+              "firstname": "Tony",
+              "phone": "55544433322"
+            }
+        }
+
++ Response 201 (application/json; charset=utf-8)
+
+    [Contact][]
+

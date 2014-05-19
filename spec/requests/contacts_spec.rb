@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe '/lists endpoints' do
+describe 'Contact resource' do
 
   valid_contact   = { lastname: "Guez", firstname: "Benjamin", phone: 5555566666 }
   invalid_contact = { lastname: "g", firstname: "b", phone: 'not_a_number' }
@@ -13,8 +13,8 @@ describe '/lists endpoints' do
     @contact3 = create(:contact, list_id: @list2.id)
   end
 
-  it "should have contacts" do
-    get "/lists/#{@list.id}/contacts.json"
+  it "GET /lists/:list_id/contacts" do
+    get "/lists/#{@list.id}/contacts"
     @list.reload
 
     expect(response.status).to be == 200
@@ -29,8 +29,8 @@ describe '/lists endpoints' do
     expect(response_json).to eq expected_json
   end
 
-  it "should retrieve one contact from a list" do
-    get "/lists/#{@list.id}/contacts/#{@contact1.id}.json"
+  it "GET /lists/:list_id/contacts/:contact_id" do
+    get "/lists/#{@list.id}/contacts/#{@contact1.id}"
 
     expect(response.status).to be == 200
     expect(response_json).to eq({
@@ -42,21 +42,21 @@ describe '/lists endpoints' do
     })
   end
 
-  it "should not retrieve a contact that doesn't belongs to the list" do
-    get "/lists/#{@list.id}/contacts/#{@contact3.id}.json"
+  it "GET /lists/:list_id/contacts/:contact_id (404 - contact doesnt belong to the list)" do
+    get "/lists/#{@list.id}/contacts/#{@contact3.id}"
 
     expect(response.status).to be == 404
   end
 
-  it "should destroy a contact from a list" do
-    delete "/lists/#{@list2.id}/contacts/#{@contact3.id}.json"
+  it "DELETE /lists/:list_id/contacts/:contact_id" do
+    delete "/lists/#{@list2.id}/contacts/#{@contact3.id}"
 
     expect(response.status).to be == 204
     expect(@list2.contacts).to have_exactly(0).items
   end
 
-  it "should update a contact from a list" do
-    patch "lists/#{@list2.id}/contacts/#{@contact3.id}.json", { contact: { firstname: "firstname Edit",
+  it "PATCH /lists/:list_id/contacts/:contact_id" do
+    patch "lists/#{@list2.id}/contacts/#{@contact3.id}", { contact: { firstname: "firstname Edit",
                                                                 lastname: "lastname Edit",
                                                                 phone: 312313223132 } }
 
@@ -70,16 +70,16 @@ describe '/lists endpoints' do
     })
   end
 
-  it "should not update a contact from a list (bad input)" do
-    patch "lists/#{@list2.id}/contacts/#{@contact3.id}.json", { contact: invalid_contact }
+  it "PATCH /lists/:list_id/contacts/:contact_id (400 - bad input)" do
+    patch "lists/#{@list2.id}/contacts/#{@contact3.id}", { contact: invalid_contact }
 
     expect(response.status).to be == 400
     expect(response_json.keys).to include('error')
     expect(response_json['error'].keys).to include('firstname', 'lastname', 'phone')
   end
 
-  it "should create a new contact in a list" do
-    post "lists/#{@list2.id}/contacts.json", { contact: valid_contact }
+  it "POST /lists/:list_id/contacts" do
+    post "lists/#{@list2.id}/contacts", { contact: valid_contact }
 
     expect(response.status).to be == 201
     expect(response_json).to eq({
@@ -94,8 +94,8 @@ describe '/lists endpoints' do
     expect(@list2.contacts_count).to be == 2
   end
 
-  it "should fail to create a new contact in a list" do
-    post "lists/#{@list2.id}/contacts.json", { contact: invalid_contact }
+  it "POST /lists/:list_id/contacts (400 - bad input)" do
+    post "lists/#{@list2.id}/contacts", { contact: invalid_contact }
 
     expect(response.status).to be == 400
     expect(response_json.keys).to include('error')

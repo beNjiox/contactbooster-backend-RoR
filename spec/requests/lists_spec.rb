@@ -1,14 +1,16 @@
 require 'spec_helper'
 
-describe '/lists endpoints' do
+describe 'List resource' do
 
   before(:each) do
-    create(:list, name: 'friends', position: 0)
+    @list1    = create(:list, name: 'friends', position: 0)
+    @contact1 = create(:contact, list_id: @list1.id)
+    @contact2 = create(:contact, list_id: @list1.id)
     create(:list, name: 'family', position: 1)
   end
 
-  it "should create a list" do
-    post '/lists.json', { list: { name: 'Work.', position: 42 } }
+  it "POST /lists" do
+    post '/lists', { list: { name: 'Work.', position: 42 } }
 
     last_list = List.last
 
@@ -19,8 +21,8 @@ describe '/lists endpoints' do
     expect(last_list.position).to eq 42
   end
 
-  it "should not create a list (invalid position)" do
-    post '/lists.json', { list: { name: 'Work.', position: 'end' } }
+  it "POST /lists (invalid)" do
+    post '/lists', { list: { name: 'Work.', position: 'end' } }
 
     expect(List.all.length).to be == 2
     expect(response.status).to be == 400
@@ -28,36 +30,45 @@ describe '/lists endpoints' do
     expect(response_json['error'].keys).to include('position')
   end
 
-  it "should return the Lists" do
-    get '/lists.json'
+  it "GET /lists" do
+    get '/lists'
 
     expect(response.status).to be == 200
     expect(response_json).to eq(
-      [{
-        'id'       => 1,
-        'name'     => 'friends',
-        'position' => 0
-      }, {
-        'id'       => 2,
-        'name'     => 'family',
-        'position' => 1
-      }]
+      {
+        'total'   => 2,
+        'lists'   => [{
+          'id'       => 1,
+          'name'     => 'friends',
+          'position' => 0,
+          'contacts' => [
+            { 'id' => @contact1.id, 'lastname' => @contact1.lastname,  'firstname' => @contact1.firstname, 'phone' => @contact1.phone },
+            { 'id' => @contact2.id, 'lastname' => @contact2.lastname,  'firstname' => @contact2.firstname, 'phone' => @contact2.phone }
+          ]
+          }, {
+          'id'       => 2,
+          'name'     => 'family',
+          'position' => 1,
+          'contacts' => []
+        }]
+      }
     )
   end
 
-  it "should retrieve the family List" do
-    get '/lists/2.json'
+  it "GET /lists/:id" do
+    get '/lists/2'
 
     expect(response.status).to be == 200
     expect(response_json).to eq({
       'id'       => 2,
       'name'     => 'family',
-      'position' => 1
+      'position' => 1,
+      'contacts' => []
     })
   end
 
-  it "should retrieve fail to retrieve List that doesn't exist" do
-    get '/lists/42.json'
+  it "GET /lists/:id (doesnt exist)" do
+    get '/lists/42'
 
     expect(response.status).to be == 404
     expect(response_json).to eq({
@@ -65,15 +76,15 @@ describe '/lists endpoints' do
     })
   end
 
-  it "should destroy an existing List" do
-    delete '/lists/2.json'
+  it "DELETE /lists/:id" do
+    delete '/lists/2'
 
     expect(response.status).to be == 204
     expect(response.body).to eq ""
   end
 
-  it "should fail to destroy an non existing List" do
-    delete '/lists/42.json'
+  it "DELETE /lists/:id (doesnt exist)" do
+    delete '/lists/42'
 
     expect(response.status).to be == 404
     expect(response_json).to eq({
@@ -81,8 +92,8 @@ describe '/lists endpoints' do
     })
   end
 
-  it "should update existing List" do
-    patch '/lists/2.json', { list: { name: 'family edit.', position: 42 } }
+  it "PATCH /lists/:id" do
+    patch '/lists/2', { list: { name: 'family edit.', position: 42 } }
 
     expect(response.status).to be == 200
     expect(response_json).to eq({
@@ -92,16 +103,16 @@ describe '/lists endpoints' do
     })
   end
 
-  it "should fail to update List with bad param" do
-    patch '/lists/2.json', { list: { name: 'family edit.', position: 'end' } }
+  it "PATCH /lists/:id (invalid input)" do
+    patch '/lists/2', { list: { name: 'family edit.', position: 'end' } }
 
     expect(response.status).to be == 400
     expect(response_json.keys).to include('error')
     expect(response_json['error'].keys).to include('position')
   end
 
-  it "should fail to update non existing List" do
-    patch '/lists/42.json', { list: { name: 'family edit.', position: 42 } }
+  it "PATCH /lists/:id (doesnt exist)" do
+    patch '/lists/42', { list: { name: 'family edit.', position: 42 } }
 
     expect(response.status).to be == 404
     expect(response_json).to eq({
