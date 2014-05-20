@@ -1,4 +1,4 @@
-json.partial! 'lists/list', list: @list
+json.partial! 'v2/lists/list', list: @list
 json.contacts do
   json.array! @list.contacts do |contact|
     json.id contact.id
