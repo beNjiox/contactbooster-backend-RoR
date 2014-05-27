@@ -3,5 +3,5 @@ class Contact < ActiveRecord::Base
 
   validates :lastname, length: { in: 2..30 }
   validates :firstname, length: { in: 2..30 }
-  validates :phone, numericality: true
+  validates :phone, length: { in: 8..10 }, format: { with: /[0-9]*/ }
 end

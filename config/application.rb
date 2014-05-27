@@ -12,5 +12,13 @@ module Ror
       g.fixture_replacement :factory_girl
       g.test_framework :rspec
     end
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :delete, :patch, :put, :options]
+      end
+    end
+
   end
 end

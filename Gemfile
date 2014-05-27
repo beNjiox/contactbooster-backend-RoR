@@ -11,6 +11,8 @@ gem 'faker'
 gem 'factory_girl_rails'
 gem 'colorize'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'awesome_print'
