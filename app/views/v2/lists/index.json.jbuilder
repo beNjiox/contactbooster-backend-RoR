@@ -8,6 +8,7 @@ json.lists do
         json.firstname contact.firstname
         json.lastname contact.lastname
         json.phone contact.phone
+        json.list_id list.id
       end
     end
   end

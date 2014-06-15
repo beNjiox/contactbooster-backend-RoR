@@ -58,7 +58,7 @@ describe 'Contact resource' do
   it "PATCH /lists/:list_id/contacts/:contact_id" do
     patch "lists/#{@list2.id}/contacts/#{@contact3.id}", { contact: { firstname: "firstname Edit",
                                                                 lastname: "lastname Edit",
-                                                                phone: 312313223132 } }
+                                                                phone: "42424242" } }
 
     expect(response.status).to be == 200
     expect(response_json).to eq({
@@ -66,7 +66,7 @@ describe 'Contact resource' do
       "list_id"   => @list2.id,
       "lastname"  => "lastname Edit",
       "firstname" => "firstname Edit",
-      "phone"     => "312313223132"
+      "phone"     => "42424242"
     })
   end
 

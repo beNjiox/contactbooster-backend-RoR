@@ -15,3 +15,6 @@
 /log/*.log
 /tmp
 coverage/
+contactbooster-ror.sublime-project
+
+contactbooster-ror.sublime-workspace

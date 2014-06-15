@@ -42,8 +42,8 @@ describe 'List resource' do
           'name'     => 'friends',
           'position' => 0,
           'contacts' => [
-            { 'id' => @contact1.id, 'lastname' => @contact1.lastname,  'firstname' => @contact1.firstname, 'phone' => @contact1.phone },
-            { 'id' => @contact2.id, 'lastname' => @contact2.lastname,  'firstname' => @contact2.firstname, 'phone' => @contact2.phone }
+            { 'id' => @contact1.id, 'lastname' => @contact1.lastname,  'firstname' => @contact1.firstname, 'phone' => @contact1.phone, 'list_id' => 1 },
+            { 'id' => @contact2.id, 'lastname' => @contact2.lastname,  'firstname' => @contact2.firstname, 'phone' => @contact2.phone, 'list_id' => 1 }
           ]
           }, {
           'id'       => 2,
